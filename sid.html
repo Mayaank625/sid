@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grievance Portal</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffe6f0;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff0f5;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #cc3366;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      color: #cc3366;
+      font-weight: bold;
+    }
+
+    textarea, input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ff99cc;
+      border-radius: 10px;
+      resize: vertical;
+    }
+
+    button {
+      margin-top: 20px;
+      width: 100%;
+      padding: 12px;
+      background-color: #ff66b2;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e055a3;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 15px;
+      color: #b30059;
+      font-size: 14px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      databaseURL: "https://YOUR_PROJECT_ID.firebaseio.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    function handleLogin(event) {
+      event.preventDefault();
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      if (username === 'her' && password === 'love') {
+        document.getElementById('loginPage').classList.add('hidden');
+        document.getElementById('portalPage').classList.remove('hidden');
+      } else {
+        alert('Incorrect login! Try again.');
+      }
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value;
+
+      database.ref('complaints').push({
+        subject: subject,
+        message: message,
+        timestamp: new Date().toISOString()
+      });
+
+      alert('Complaint submitted successfully!');
+      event.target.reset();
+    }
+  </script>
+</head>
+<body>
+  <div class="container" id="loginPage">
+    <h1>Login</h1>
+    <form onsubmit="handleLogin(event)">
+      <label for="username">Username</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="password">Password</label>
+      <input type="password" id="password" name="password" required>
+
+      <button type="submit">Login</button>
+    </form>
+  </div>
+
+  <div class="container hidden" id="portalPage">
+    <h1>Grievance Portal</h1>
+    <form onsubmit="handleFormSubmit(event)">
+      <label for="subject">Complaint Subject</label>
+      <input type="text" id="subject" name="subject" required>
+
+      <label for="message">Detailed Complaint</label>
+      <textarea id="message" name="message" rows="6" required></textarea>
+
+      <button type="submit">Submit Complaint</button>
+    </form>
+    <div class="footer">
+      We'll try to make things better, promise!
+    </div>
+  </div>
+</body>
+</html>
