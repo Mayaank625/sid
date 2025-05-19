@@ -3,26 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Grievance Portal</title>
+  <title>Grievance Portal 💌</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #ffe6f0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff0f5;
       margin: 0;
       padding: 0;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
+      overflow: hidden;
     }
 
     .container {
-      background-color: #fff0f5;
+      background-color: #ffe6f0cc;
       padding: 30px;
       border-radius: 20px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       width: 100%;
       max-width: 400px;
+      backdrop-filter: blur(8px);
+      z-index: 1;
+    }
+
+    #portalPage {
+      background-image: url('https://i.imgur.com/kR2FsAB.png'); /* Subtle heart background */
+      background-repeat: repeat;
+      background-size: 80px 80px;
     }
 
     h1 {
@@ -44,6 +53,7 @@
       border: 1px solid #ff99cc;
       border-radius: 10px;
       resize: vertical;
+      background-color: #fffafc;
     }
 
     button {
@@ -56,6 +66,7 @@
       border-radius: 10px;
       font-size: 16px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     button:hover {
@@ -71,6 +82,18 @@
 
     .hidden {
       display: none;
+    }
+
+    /* Floating hearts background */
+    .hearts-bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://i.imgur.com/kR2FsAB.png');
+      background-repeat: repeat;
+      background-size: 80px 80px;
+      opacity: 0.15;
+      z-index: 0;
     }
   </style>
 
@@ -101,7 +124,7 @@
         document.getElementById('loginPage').classList.add('hidden');
         document.getElementById('portalPage').classList.remove('hidden');
       } else {
-        alert('Incorrect login! Try again.');
+        alert('Oops! That wasn\'t right 😅\nTry again, love.');
       }
     }
 
@@ -116,14 +139,19 @@
         timestamp: new Date().toISOString()
       });
 
-      alert('Complaint submitted successfully!');
+      setTimeout(() => {
+        alert("Sorry 😔\nI'm truly sorry you had to go through this.\nYour complaint has been sent, and I promise I’ll make it better. ❤️");
+      }, 300);
+
       event.target.reset();
     }
   </script>
 </head>
 <body>
+  <div class="hearts-bg"></div>
+
   <div class="container" id="loginPage">
-    <h1>Grievance Portal Login</h1>
+    <h1>Welcome My Love 💕</h1>
     <form onsubmit="handleLogin(event)">
       <label for="username">Username</label>
       <input type="text" id="username" name="username" required>
@@ -131,23 +159,23 @@
       <label for="password">Password</label>
       <input type="password" id="password" name="password" required>
 
-      <button type="submit">Login</button>
+      <button type="submit">Let Me In 💘</button>
     </form>
   </div>
 
   <div class="container hidden" id="portalPage">
-    <h1>Submit Your Grievance</h1>
+    <h1>Tell Me What’s Wrong 😟</h1>
     <form onsubmit="handleFormSubmit(event)">
-      <label for="subject">Complaint Subject</label>
+      <label for="subject">What's it about?</label>
       <input type="text" id="subject" name="subject" required>
 
-      <label for="message">Detailed Complaint</label>
+      <label for="message">Let it all out</label>
       <textarea id="message" name="message" rows="6" required></textarea>
 
-      <button type="submit">Submit Complaint</button>
+      <button type="submit">Send Complaint 💌</button>
     </form>
     <div class="footer">
-      We'll try to make things better, promise!
+      I'm always here for you 💖
     </div>
   </div>
 </body>
